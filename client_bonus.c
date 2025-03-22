@@ -14,14 +14,14 @@
 
 volatile sig_atomic_t	g_flag = 0;
 
-void	handler_flag(int sig)
+void	check_flag(int sig)
 {
 	(void)sig;
 	if (sig == SIGUSR1)
 		g_flag = 1;
 }
 
-void	send_sig(int pid, char c)
+void	sig_sender(int pid, char c)
 {
 	int	bit;
 
@@ -56,10 +56,10 @@ int	main(int argc, char **argv)
 		ft_putstr("Error: invalid PID.\n");
 		return (1);
 	}
-	signal(SIGUSR1, handler_flag);
+	signal(SIGUSR1, check_flag);
 	message = argv[2];
 	while (*message)
-		send_sig(pid, *message++);
-	send_sig(pid, '\0');
+		sig_sender(pid, *message++);
+	sig_sender(pid, '\0');
 	return (0);
 }

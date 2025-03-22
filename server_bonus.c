@@ -12,7 +12,7 @@
 
 #include "minitalk_bonus.h"
 
-void	handler(int sig, siginfo_t *info, void *context)
+void	sig_handle(int sig, siginfo_t *info, void *context)
 {
 	static int	bit = 0;
 	static char	c = 0;
@@ -41,7 +41,7 @@ int	main(void)
 {
 	struct sigaction	act;
 
-	act.sa_sigaction = handler;
+	act.sa_sigaction = sig_handle;
 	act.sa_flags = SA_SIGINFO;
 	sigemptyset(&act.sa_mask);
 	if (sigaction(SIGUSR1, &act, NULL) == -1)
